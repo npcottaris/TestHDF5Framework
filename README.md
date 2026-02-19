@@ -1,32 +1,29 @@
-//
-//  README.md
-//  TestHDF5Framework
-//
-//  Created by Nicolas Cottaris on 2/19/26.
-//
-
-# STEP 1: Install CMake
+## STEP 1: Install CMake
+```
 brew install cmake ninja
+```
 
 
-# STEP 2: Download and extract
+## STEP 2: Download and extract
+```
 curl -O https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.14/hdf5-1.14.3/src/hdf5-1.14.3.tar.gz
 tar -xzf hdf5-1.14.3.tar.gz
 cd hdf5-1.14.3
 mkdir build && cd build
+```
 
-
-# STEP 3: Configure xCode
-
+## STEP 3: Configure xCode
+```
 sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 xcode-select -p
- sudo xcodebuild -license accept
- sudo xcodebuild -runFirstLaunch
+sudo xcodebuild -license accept
+sudo xcodebuild -runFirstLaunch
+```
 
+## STEP 4: Build it for Apple Silicon
+### STEP 4a:
 
-# STEP 4: Build it for Apple Silicon
-# STEP 4a:
-
+```
 cmake .. \
     -G Ninja \
     -DCMAKE_OSX_ARCHITECTURES="arm64" \
@@ -45,33 +42,41 @@ cmake .. \
 
 cmake --build . --config Release
 cmake --install .
+```
 
-# STEP 4b: Verify the binary
+### STEP 4b: Verify the binary
+```
 lipo -info "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/hdf5-macos/lib/libhdf5.a"
+```
 
-# STEP 4c: Package as an Xcode Framework
-
+### STEP 4c: Package as an Xcode Framework
+```
 xcodebuild -create-xcframework \
     -library "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/hdf5-macos/lib/libhdf5.a" \
     -headers "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/hdf5-macos/include" \
     -output "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/HDF5.xcframework"
+```
 
 
-
-# STEP 4d: Add the modulemap:
+### STEP 4d: Add the modulemap:
+```
 cat > "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/HDF5.xcframework/macos-arm64/Headers/module.modulemap" <<EOF
 module HDF5 [system] {
     header "hdf5.h"
     export *
 }
 EOF
+```
 
-# STEP 4e: Verify that it worked
+### STEP 4e: Verify that it worked
+
+```
 cat "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/HDF5.xcframework/macos-arm64/Headers/module.modulemap"
-
+```
 You should see:
 ```
 module HDF5 [system] {
     header "hdf5.h"
     export *
 }
+```
