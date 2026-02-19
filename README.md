@@ -80,3 +80,40 @@ module HDF5 [system] {
     export *
 }
 ```
+
+## STEP 5: Build a test project
+In Xcode generate a new MacOS app project
+Modify the ContentView.swift as follows:
+```
+import SwiftUI
+import HDF5
+
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Image(systemName: "globe")
+                .imageScale(.large)
+                .foregroundStyle(.tint)
+            Text("Hello, world!")
+        }
+        .padding()
+        .onTapGesture {test() }
+       
+    }
+
+    func test() {
+        H5open()                 //initializes the library and returns non-negative on success
+        let status = H5open()
+        assert(status >= 0, "HDF5 failed to initialize")
+        print("HDF5 version: \(H5_VERS_MAJOR).\(H5_VERS_MINOR).\(H5_VERS_RELEASE)")
+    }
+
+    
+}
+
+#Preview {
+    ContentView()
+}
+
+```
