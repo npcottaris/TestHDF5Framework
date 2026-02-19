@@ -82,8 +82,10 @@ module HDF5 [system] {
 ```
 
 ## STEP 5: Build a test project
-In Xcode generate a new MacOS app project
-Modify the ContentView.swift as follows:
+### STEP 5e: Generate Xcode project
+
+In Xcode generate a new MacOS app project. Then modify the ContentView.swift as follows:
+
 ```
 import SwiftUI
 import HDF5
@@ -116,4 +118,19 @@ struct ContentView: View {
     ContentView()
 }
 
+```
+
+### STEP 5b: Add the HDF5.xcframework 
+In the Xcode project, click on File -> Add Files to App and add the entire folder 
+`$HOME/Developer/Swift/TestHDF5Framework/HDF5frameworkResources/HDF5.xcframework`
+with the option to copy.
+
+Then in ContentView.swift add
+```
+import HDF5
+```
+
+Compile the project and click on the world icon. It should print the version of the library
+```
+HDF5 version: 1.14.3
 ```
