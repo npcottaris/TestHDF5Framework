@@ -29,7 +29,7 @@ cmake .. \
     -DCMAKE_OSX_ARCHITECTURES="arm64" \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX="$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/hdf5-macos" \
+    -DCMAKE_INSTALL_PREFIX="$HOME/Developer/Swift/TestHDF5Framework/HDF5frameworkResources/hdf5-macos" \
     -DBUILD_SHARED_LIBS=OFF \
     -DBUILD_TESTING=OFF \
     -DHDF5_BUILD_TOOLS=OFF \
@@ -46,21 +46,21 @@ cmake --install .
 
 ### STEP 4b: Verify the binary
 ```
-lipo -info "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/hdf5-macos/lib/libhdf5.a"
+lipo -info "$HOME/Developer/Swift/TestHDF5Framework/HDF5frameworkResources/hdf5-macos/lib/libhdf5.a"
 ```
 
 ### STEP 4c: Package as an Xcode Framework
 ```
 xcodebuild -create-xcframework \
-    -library "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/hdf5-macos/lib/libhdf5.a" \
-    -headers "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/hdf5-macos/include" \
-    -output "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/HDF5.xcframework"
+    -library "$HOME/Developer/Swift/TestHDF5Framework/HDF5frameworkResources/hdf5-macos/lib/libhdf5.a" \
+    -headers "$HOME/Developer/Swift/TestHDF5Framework/HDF5frameworkResources/hdf5-macos/include" \
+    -output "$HOME/Developer/Swift/TestHDF5Framework/HDF5frameworkResources/HDF5.xcframework"
 ```
 
 
 ### STEP 4d: Add the modulemap:
 ```
-cat > "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/HDF5.xcframework/macos-arm64/Headers/module.modulemap" <<EOF
+cat > "$HOME/Developer/Swift/TestHDF5Framework/HDF5frameworkResources/HDF5.xcframework/macos-arm64/Headers/module.modulemap" <<EOF
 module HDF5 [system] {
     header "hdf5.h"
     export *
@@ -71,7 +71,7 @@ EOF
 ### STEP 4e: Verify that it worked
 
 ```
-cat "$HOME/Documents/1_developer/1_swift.swift/HDF5packageResources/HDF5.xcframework/macos-arm64/Headers/module.modulemap"
+cat "$HOME/Developer/Swift/TestHDF5Framework/HDF5frameworkResources/HDF5.xcframework/macos-arm64/Headers/module.modulemap"
 ```
 You should see:
 ```
