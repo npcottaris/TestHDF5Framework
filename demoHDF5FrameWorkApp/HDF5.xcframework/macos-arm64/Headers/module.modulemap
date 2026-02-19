@@ -1,0 +1,4 @@
+module HDF5 [system] {
+    header "hdf5.h"
+    export *
+}
